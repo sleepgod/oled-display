@@ -32,7 +32,7 @@ public class DisplayApplication {
             display.clear();
             display.displayString("IP:" + getLocalHostLANAddress().getHostAddress());
 
-            DHT11 dht11 = new DHT11(25);
+            DHT11 dht11 = new DHT11(7);
             while (true) {
                 DHT11Result result = dht11.read();
                 if (result.isValid()) {

@@ -22,7 +22,8 @@ public class DisplayApplication {
             display = new Display(128, 64, gpio, i2c, 0x3c);
             display.begin();
             display.clear();
-            display.setPixel(10,10, true);
+//            display.setPixel(10,10, true);
+            display.displayString("abcd");
         } catch (I2CFactory.UnsupportedBusNumberException | IOException e) {
             e.printStackTrace();
         }

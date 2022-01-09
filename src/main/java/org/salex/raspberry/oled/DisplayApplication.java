@@ -30,7 +30,7 @@ public class DisplayApplication {
             display = new Display(128, 64, gpio, i2c, 0x3c);
             display.begin();
             display.clear();
-            display.displayString("IP:" + getLocalHostLANAddress().getHostAddress());
+//            display.displayString("IP:" + getLocalHostLANAddress().getHostAddress());
 
             DHT11 dht11 = new DHT11(7);
             while (true) {
@@ -39,8 +39,11 @@ public class DisplayApplication {
                     System.out.println("Last valid input: " + new Date());
                     System.out.printf("Temperature: %.1f C\n", result.getTemperature());
                     System.out.printf("Humidity:    %.1f %%\n", result.getHumidity());
+                    display.displayString("IP:" + getLocalHostLANAddress().getHostAddress());
+                    display.displayString("温度:" + result.getTemperature());
+                    display.displayString("湿度:" + result.getHumidity());
                 }
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(30);
             }
         } catch (Exception e) {
             e.printStackTrace();

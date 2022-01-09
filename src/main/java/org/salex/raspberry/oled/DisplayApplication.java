@@ -5,18 +5,22 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CFactory;
 import com.pi4j.wiringpi.I2C;
+import org.salex.raspberry.oled.dht11.DHT11;
+import org.salex.raspberry.oled.dht11.DHT11Result;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.Enumeration;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 public class DisplayApplication {
     public static void main(String[] args) {
-
         // create gpio controller
         final GpioController gpio = GpioFactory.getInstance();
         I2CBus i2c;
@@ -27,7 +31,18 @@ public class DisplayApplication {
             display.begin();
             display.clear();
             display.displayString("IP:" + getLocalHostLANAddress().getHostAddress());
-        } catch (I2CFactory.UnsupportedBusNumberException | IOException e) {
+
+            DHT11 dht11 = new DHT11(25);
+            while (true) {
+                DHT11Result result = dht11.read();
+                if (result.isValid()) {
+                    System.out.println("Last valid input: " + new Date());
+                    System.out.printf("Temperature: %.1f C\n", result.getTemperature());
+                    System.out.printf("Humidity:    %.1f %%\n", result.getHumidity());
+                }
+                TimeUnit.SECONDS.sleep(2);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

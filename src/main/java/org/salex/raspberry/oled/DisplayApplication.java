@@ -23,7 +23,7 @@ public class DisplayApplication {
             display.begin();
             display.clear();
 //            display.setPixel(10,10, true);
-            display.displayString("abcd");
+            display.displayString("中abcd国");
         } catch (I2CFactory.UnsupportedBusNumberException | IOException e) {
             e.printStackTrace();
         }

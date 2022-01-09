@@ -1,16 +1,18 @@
 package org.salex.raspberry.oled;
 
+import cn.hutool.core.date.ChineseDate;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CFactory;
 import com.pi4j.wiringpi.I2C;
+import org.apache.commons.lang3.StringUtils;
 import org.salex.raspberry.oled.dht11.DHT11;
 import org.salex.raspberry.oled.dht11.DHT11Result;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
@@ -40,15 +42,40 @@ public class DisplayApplication {
                     System.out.printf("Temperature: %.1f C\n", result.getTemperature());
                     System.out.printf("Humidity:    %.1f %%\n", result.getHumidity());
 
+                    ChineseDate date = new ChineseDate(DateUtil.date());
+
+                    String pressText = date.toString();
+                    if (StringUtils.isNotBlank(date.getTerm())) {
+                        pressText += " " + date.getTerm();
+                    }
+                    if (StringUtils.isNotBlank(date.getFestivals())) {
+                        pressText += " " + date.getFestivals();
+                    }
+                    String shu9 = shu9();
+                    if (StringUtils.isNotBlank(shu9)) {
+                        pressText += " " + shu9;
+                    }
+
                     display.displayString(0, "IP:" + getLocalHostLANAddress().getHostAddress(),
                             "温度:" + result.getTemperature(),
-                            "湿度:" + result.getHumidity());
+                            "湿度:" + result.getHumidity(),
+                            pressText);
                 }
                 TimeUnit.SECONDS.sleep(30);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static final String[] NUM = {"零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"};
+
+    public static String shu9() {
+        Long betweenDay = DateUtil.between(DateUtil.parse("2021-12-21"), DateUtil.date(), DateUnit.DAY);
+        if (betweenDay > 81) {
+            return "";
+        }
+        return NUM[(betweenDay.intValue() / 9 + 1)] + "九第" + NUM[(betweenDay.intValue() % 9 + 1)] + "天";
     }
 
     // 正确的IP拿法，即优先拿site-local地址

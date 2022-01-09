@@ -41,7 +41,7 @@ public class DisplayApplication {
                     System.out.printf("Humidity:    %.1f %%\n", result.getHumidity());
 
                     display.displayString(0, "IP:" + getLocalHostLANAddress().getHostAddress());
-                    display.displayString(8, "温度:" + result.getTemperature() + "湿度:" + result.getHumidity());
+                    display.displayString(60, "温度:" + result.getTemperature() + "湿度:" + result.getHumidity());
                 }
                 TimeUnit.SECONDS.sleep(30);
             }

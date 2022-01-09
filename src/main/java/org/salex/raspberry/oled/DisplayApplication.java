@@ -27,10 +27,10 @@ public class DisplayApplication {
         Display display;
         try {
             i2c = I2CFactory.getInstance(I2C.CHANNEL_1);
-            display = new Display(128, 64, gpio, i2c, 0x3c);
+            display = new Display(Constants.LCD_WIDTH_128, Constants.LCD_HEIGHT_64, gpio, i2c, 0x3c);
             display.begin();
             display.clear();
-//            display.displayString("IP:" + getLocalHostLANAddress().getHostAddress());
+            display.displayString(0, "IP:" + getLocalHostLANAddress().getHostAddress());
 
             DHT11 dht11 = new DHT11(7);
             while (true) {
@@ -39,8 +39,8 @@ public class DisplayApplication {
                     System.out.println("Last valid input: " + new Date());
                     System.out.printf("Temperature: %.1f C\n", result.getTemperature());
                     System.out.printf("Humidity:    %.1f %%\n", result.getHumidity());
-                    display.displayString("IP:" + getLocalHostLANAddress().getHostAddress()
-                            + "温度:" + result.getTemperature()
+
+                    display.displayString(8, "温度:" + result.getTemperature()
                             + "湿度:" + result.getHumidity());
                 }
                 TimeUnit.SECONDS.sleep(30);

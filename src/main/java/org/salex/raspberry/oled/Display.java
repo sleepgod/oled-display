@@ -35,10 +35,10 @@ public class Display {
      * @param i2c     I2C object
      * @param address Display address
      * @param rstPin  Reset pin
-     * @see GpioFactory#getInstance() GpioController instance factory
-     * @see com.pi4j.io.i2c.I2CFactory#getInstance(int) I2C bus factory
      * @throws ReflectiveOperationException Thrown if I2C handle is not accessible
      * @throws IOException                  Thrown if the bus can't return device for specified address
+     * @see GpioFactory#getInstance() GpioController instance factory
+     * @see com.pi4j.io.i2c.I2CFactory#getInstance(int) I2C bus factory
      */
     public Display(int width, int height, GpioController gpio, I2CBus i2c, int address, Pin rstPin) throws IOException {
         this.width = width;
@@ -57,7 +57,7 @@ public class Display {
         this.graphics = this.img.createGraphics();
 
         this.fd = I2C.wiringPiI2CSetup(address);
-        if ( this.fd == -1 ){
+        if (this.fd == -1) {
             throw new IOException("Unable to open device at address: " + address);
         }
     }
@@ -86,8 +86,7 @@ public class Display {
             this.init(0x1F, 0x02, 0x80);
         } else if (this.width == Constants.LCD_WIDTH_96 && this.height == Constants.LCD_HEIGHT_16) {
             this.init(0x0F, 0x02, 0x60);
-        }
-        else {
+        } else {
             throw new IOException("Invalid width: " + this.width + " or height: " + this.height);
         }
 
@@ -137,6 +136,7 @@ public class Display {
 
     /**
      * Turns on command mode and sends command
+     *
      * @param command Command to send. Should be in short range.
      */
     private void command(int command) {
@@ -145,6 +145,7 @@ public class Display {
 
     /**
      * Turns on data mode and sends data
+     *
      * @param data Data to send. Should be in short range.
      */
     private void data(int data) {
@@ -153,11 +154,12 @@ public class Display {
 
     /**
      * Turns on data mode and sends data array
+     *
      * @param data Data array
      */
     private void data(byte[] data) {
         for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < 16; j++){
+            for (int j = 0; j < 16; j++) {
                 this.i2cWrite(0x40, data[i]);
                 i++;
             }
@@ -168,6 +170,7 @@ public class Display {
 
     /**
      * Begin with SWITCHCAPVCC VCC mode
+     *
      * @see Constants#SSD1306_SWITCHCAPVCC
      */
     public void begin() throws IOException {
@@ -176,6 +179,7 @@ public class Display {
 
     /**
      * Begin with specified VCC mode (can be SWITCHCAPVCC or EXTERNALVCC)
+     *
      * @param vccState VCC mode
      * @see Constants#SSD1306_SWITCHCAPVCC
      * @see Constants#SSD1306_EXTERNALVCC
@@ -229,6 +233,7 @@ public class Display {
 
     /**
      * Sets the display contract. Apparently not really working.
+     *
      * @param contrast Contrast
      */
     public void setContrast(byte contrast) {
@@ -238,6 +243,7 @@ public class Display {
 
     /**
      * Sets if the backlight should be dimmed
+     *
      * @param dim Dim state
      */
     public void dim(boolean dim) {
@@ -254,6 +260,7 @@ public class Display {
 
     /**
      * Sets if the display should be inverted
+     *
      * @param invert Invert state
      */
     public void invertDisplay(boolean invert) {
@@ -318,8 +325,9 @@ public class Display {
 
     /**
      * Sets one pixel in the current buffer
-     * @param x X position
-     * @param y Y position
+     *
+     * @param x     X position
+     * @param y     Y position
      * @param white White or black pixel
      * @return True if the pixel was successfully set
      */
@@ -339,6 +347,7 @@ public class Display {
 
     /**
      * Copies AWT image contents to buffer. Calls display()
+     *
      * @see Display#display()
      */
     public synchronized void displayImage() {
@@ -355,6 +364,7 @@ public class Display {
 
     /**
      * Sets internal buffer
+     *
      * @param buffer New used buffer
      */
     private void setBuffer(byte[] buffer) {
@@ -363,8 +373,9 @@ public class Display {
 
     /**
      * Sets one byte in the buffer
+     *
      * @param position Position to set
-     * @param value Value to set
+     * @param value    Value to set
      */
     private void setBufferByte(int position, byte value) {
         this.buffer[position] = value;
@@ -372,7 +383,8 @@ public class Display {
 
     /**
      * Sets internal AWT image to specified one.
-     * @param img BufferedImage to set
+     *
+     * @param img            BufferedImage to set
      * @param createGraphics If true, createGraphics() will be called on the image and the result will be saved
      *                       to the internal Graphics field accessible by getGraphics() method
      */
@@ -391,6 +403,7 @@ public class Display {
 
     /**
      * Returns internal AWT image
+     *
      * @return BufferedImage
      */
     private BufferedImage getImage() {
@@ -400,6 +413,7 @@ public class Display {
     /**
      * Returns Graphics object which is associated to current AWT image,
      * if it wasn't set using setImage() with false createGraphics parameter
+     *
      * @return Graphics2D object
      */
     private Graphics2D getGraphics() {
@@ -408,18 +422,19 @@ public class Display {
 
     /**
      * Clears the screen and displays the string sent in, adding new lines as needed
+     *
      * @param data
      */
-    public void displayString(String... data) {
+    public void displayString(int x, String... data) {
         clearImage();
         for (int i = 0; i < data.length; i++) {
-            graphics.drawString(data[i], 0, Constants.STRING_HEIGHT * (i + 1));
+            graphics.drawString(data[i], x, Constants.STRING_HEIGHT * (i + 1));
         }
         displayImage();
     }
 
     public void horizontalLine(int position) {
-        for (int i = 0; i < width; i++){
+        for (int i = 0; i < width; i++) {
             setPixel(i, position, true);
         }
         display();

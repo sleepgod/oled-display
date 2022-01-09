@@ -39,9 +39,9 @@ public class DisplayApplication {
                     System.out.println("Last valid input: " + new Date());
                     System.out.printf("Temperature: %.1f C\n", result.getTemperature());
                     System.out.printf("Humidity:    %.1f %%\n", result.getHumidity());
-                    display.displayString("IP:" + getLocalHostLANAddress().getHostAddress());
-                    display.displayString("温度:" + result.getTemperature());
-                    display.displayString("湿度:" + result.getHumidity());
+                    display.displayString("IP:" + getLocalHostLANAddress().getHostAddress()
+                            + "温度:" + result.getTemperature()
+                            + "湿度:" + result.getHumidity());
                 }
                 TimeUnit.SECONDS.sleep(30);
             }

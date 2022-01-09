@@ -44,7 +44,7 @@ public class DisplayApplication {
 
                     ChineseDate date = new ChineseDate(DateUtil.date());
 
-                    String pressText = date.toString();
+                    String pressText = date.getChineseMonthName() + date.getChineseDay();
                     String shu9 = shu9();
                     if (StringUtils.isNotBlank(shu9)) {
                         pressText += " " + shu9;

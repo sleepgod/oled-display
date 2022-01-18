@@ -38,9 +38,9 @@ public class DisplayApplication {
             while (true) {
                 DHT11Result result = dht11.read();
                 if (result.isValid()) {
-                    System.out.println("Last valid input: " + new Date());
-                    System.out.printf("Temperature: %.1f C\n", result.getTemperature());
-                    System.out.printf("Humidity:    %.1f %%\n", result.getHumidity());
+//                    System.out.println("Last valid input: " + new Date());
+//                    System.out.printf("Temperature: %.1f C\n", result.getTemperature());
+//                    System.out.printf("Humidity:    %.1f %%\n", result.getHumidity());
 
                     ChineseDate date = new ChineseDate(DateUtil.date());
 

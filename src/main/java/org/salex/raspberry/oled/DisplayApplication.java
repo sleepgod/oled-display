@@ -39,7 +39,7 @@ public class DisplayApplication {
                             int pageSize = screen.size();
                             if (pageSize > 0) {
                                 int index = pageIndex % pageSize;
-                                System.out.println("index:" + index);
+//                                System.out.println("index:" + index);
                                 display.displayString(screen.get(index));
                             }
                             pageIndex++;
@@ -81,7 +81,6 @@ public class DisplayApplication {
         try {
             display = new Display(Constants.LCD_WIDTH_128, Constants.LCD_HEIGHT_64, GpioFactory.getInstance(), I2CFactory.getInstance(I2C.CHANNEL_1), 0x3c);
             display.begin();
-
             Map<Integer, List<Content>> screen = new HashMap<>();
             make(screen);
             show(screen);
@@ -153,7 +152,7 @@ public class DisplayApplication {
     private static List<Content> getPage1() {
         List<Content> list = new ArrayList<>();
         try {
-            int fontSize = 12;
+            int fontSize = 13;
             Content ip = new Content(display.getGraphics2D(),
                     "IP:" + getLocalHostLANAddress().getHostAddress(),
                     FontUtil.createSansSerifFont(fontSize), 0, 0);
@@ -199,45 +198,11 @@ public class DisplayApplication {
         try {
             Content time = new Content(display.getGraphics2D(),
                     DateUtil.format(DateUtil.date(), "MM-dd HH:mm"),
-                    FontUtil.createSansSerifFont(16), Align.ALIGN_CENTER, Align.ALIGN_CENTER);
+                    FontUtil.createSansSerifFont(18), Align.ALIGN_CENTER, Align.ALIGN_CENTER);
             list.add(time);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return list;
-    }
-
-    private static void t1() {
-        try {
-            final GpioController gpio = GpioFactory.getInstance();
-            I2CBus i2c = I2CFactory.getInstance(I2C.CHANNEL_1);
-            Display display = new Display(Constants.LCD_WIDTH_128, Constants.LCD_HEIGHT_64, gpio, i2c, 0x3c);
-            display.begin();
-            display.clear();
-            display.displayString(0, "IP:" + getLocalHostLANAddress().getHostAddress());
-
-            DHT11 dht11 = new DHT11(7);
-            while (true) {
-                DHT11Result result = dht11.read();
-                if (result.isValid()) {
-                    ChineseDate date = new ChineseDate(DateUtil.date());
-
-                    String pressText = date.getChineseMonthName() + date.getChineseDay();
-                    String shu9 = shu9();
-                    if (StringUtils.isNotBlank(shu9)) {
-                        pressText += " " + shu9;
-                    }
-
-                    display.displayString(0, "IP:" + getLocalHostLANAddress().getHostAddress(),
-                            "温度:" + result.getTemperature(),
-                            "湿度:" + result.getHumidity(),
-                            pressText);
-                }
-                TimeUnit.SECONDS.sleep(30);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -20,7 +20,7 @@ public class Content {
         g2d.setFont(font);
         strRect = font.getStringBounds(str, g2d.getFontRenderContext());
 //        this.point = new Point((int) (x + 0 - strRect.getY()), (int) (y + 0 - strRect.getY()));
-        this.point = new Point(x, y);
+        this.point = new Point(x, (int) (y + 0 - strRect.getY()));
         this.str = str;
     }
 
@@ -30,7 +30,8 @@ public class Content {
         strRect = font.getStringBounds(str, g2d.getFontRenderContext());
         Rectangle rectangle = g2d.getClipBounds();
 
-        int x = (int) (0 - strRect.getY());
+//        int x = (int) (0 - strRect.getY());
+        int x = 0;
         int y = (int) (0 - strRect.getY());
         switch (xAlign) {
             case ALIGN_LEFT: {

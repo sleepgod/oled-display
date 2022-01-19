@@ -152,7 +152,7 @@ public class DisplayApplication {
     private static List<Content> getPage1() {
         List<Content> list = new ArrayList<>();
         try {
-            int fontSize = 13;
+            int fontSize = 14;
             Content ip = new Content(display.getGraphics2D(),
                     "IP:" + getLocalHostLANAddress().getHostAddress(),
                     FontUtil.createSansSerifFont(fontSize), 0, 0);
@@ -198,7 +198,7 @@ public class DisplayApplication {
         try {
             Content time = new Content(display.getGraphics2D(),
                     DateUtil.format(DateUtil.date(), "MM-dd HH:mm"),
-                    FontUtil.createSansSerifFont(18), Align.ALIGN_CENTER, Align.ALIGN_CENTER);
+                    FontUtil.createSansSerifFont(20), Align.ALIGN_CENTER, Align.ALIGN_CENTER);
             list.add(time);
         } catch (Exception e) {
             e.printStackTrace();

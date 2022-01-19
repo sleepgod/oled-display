@@ -44,8 +44,11 @@ public class DisplayApplication {
                     while (true) {
                         synchronized (screen) {
                             int pageSize = screen.size();
+                            System.out.println("pageSize:" + pageSize);
                             if (pageSize > 0) {
-                                display.displayString(screen.get(pageSize % pageIndex++));
+                                int index = pageSize % pageIndex++;
+                                System.out.println("index:" + index + " pageIndex:" + pageIndex);
+                                display.displayString(screen.get(index));
                             }
                             if (pageIndex >= pageSize) {
                                 pageIndex = 1;
@@ -193,7 +196,7 @@ public class DisplayApplication {
         try {
             Content time = new Content(display.getGraphics2D(),
                     DateUtil.format(DateUtil.date(), "MM-dd HH:mm"),
-                    FontUtil.createSansSerifFont(64), Align.ALIGN_CENTER, Align.ALIGN_CENTER);
+                    FontUtil.createSansSerifFont(32), Align.ALIGN_CENTER, Align.ALIGN_CENTER);
             list.add(time);
         } catch (Exception e) {
             e.printStackTrace();

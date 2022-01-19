@@ -439,6 +439,7 @@ public class Display {
         clearImage();
         for (int i = 0; i < contentList.size(); i++) {
             Content content = contentList.get(i);
+            System.out.println(content.toString());
             graphics.setFont(content.getFont());
             graphics.drawString(content.getStr(), content.getPoint().x, content.getPoint().y);
         }

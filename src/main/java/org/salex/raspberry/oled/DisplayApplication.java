@@ -37,10 +37,9 @@ public class DisplayApplication {
                     while (true) {
                         synchronized (screen) {
                             int pageSize = screen.size();
-                            System.out.println("pageSize:" + pageSize);
                             if (pageSize > 0) {
                                 int index = pageIndex % pageSize;
-                                System.out.println("index:" + index + " pageIndex:" + pageIndex);
+                                System.out.println("index:" + index);
                                 display.displayString(screen.get(index));
                             }
                             pageIndex++;
@@ -150,6 +149,7 @@ public class DisplayApplication {
 
     private static double tv = 0;
     private static double hv = 0;
+
     private static List<Content> getPage1() {
         List<Content> list = new ArrayList<>();
         try {

@@ -55,7 +55,8 @@ public class Display {
             this.hasRst = false;
         }
 
-        this.img = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_BINARY);
+        // BufferedImage.TYPE_BYTE_BINARY
+        this.img = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
         this.graphics = this.img.createGraphics();
         this.graphics.setClip(0, 0, width, height);
         this.fd = I2C.wiringPiI2CSetup(address);

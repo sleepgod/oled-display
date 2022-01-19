@@ -169,21 +169,25 @@ public class DisplayApplication {
 
             DHT11 dht11 = new DHT11(7);
             DHT11Result result = dht11.read();
+            double tv = 0;
+            double hv = 0;
             if (result.isValid()) {
-                Content t = new Content(display.getGraphics2D(),
-                        "温度:" + result.getTemperature(),
-                        FontUtil.createSansSerifFont(fontSize),
-                        0,
-                        (int) (ip.getPoint().getY() + ip.getStrRect().getHeight()));
-                list.add(t);
-
-                Content h = new Content(display.getGraphics2D(),
-                        "湿度:" + result.getHumidity(),
-                        FontUtil.createSansSerifFont(fontSize),
-                        0,
-                        (int) (t.getPoint().getY() + t.getStrRect().getHeight()));
-                list.add(h);
+                tv = result.getTemperature();
+                hv = result.getHumidity();
             }
+            Content t = new Content(display.getGraphics2D(),
+                    "温度:" + tv,
+                    FontUtil.createSansSerifFont(fontSize),
+                    0,
+                    (int) (ip.getPoint().getY() + ip.getStrRect().getHeight()));
+            list.add(t);
+
+            Content h = new Content(display.getGraphics2D(),
+                    "湿度:" + hv,
+                    FontUtil.createSansSerifFont(fontSize),
+                    0,
+                    (int) (t.getPoint().getY() + t.getStrRect().getHeight()));
+            list.add(h);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }

@@ -48,7 +48,7 @@ public class DisplayApplication {
                                 pageIndex = 0;
                             }
                         }
-                        ThreadUtil.safeSleep(15 * 1000);
+                        ThreadUtil.safeSleep(5 * 1000);
                     }
                 }
             });
@@ -69,7 +69,7 @@ public class DisplayApplication {
                             screen.put(0, page2);
                             screen.put(1, page1);
                         }
-                        ThreadUtil.safeSleep(15 * 1000);
+                        ThreadUtil.safeSleep(5 * 1000);
                     }
                 }
             });

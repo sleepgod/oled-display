@@ -6,11 +6,13 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.wiringpi.I2C;
+import ink.dwx.Content;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.io.IOException;
+import java.util.List;
 
 public class Display {
 
@@ -55,7 +57,7 @@ public class Display {
 
         this.img = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_BINARY);
         this.graphics = this.img.createGraphics();
-
+        this.graphics.setClip(0, 0, width, height);
         this.fd = I2C.wiringPiI2CSetup(address);
         if (this.fd == -1) {
             throw new IOException("Unable to open device at address: " + address);
@@ -433,6 +435,16 @@ public class Display {
         displayImage();
     }
 
+    public void displayString(List<Content> contentList) {
+        clearImage();
+        for (int i = 0; i < contentList.size(); i++) {
+            Content content = contentList.get(i);
+            graphics.setFont(content.getFont());
+            graphics.drawString(content.getStr(), content.getPoint().x, content.getPoint().y);
+        }
+        displayImage();
+    }
+
     public void horizontalLine(int position) {
         for (int i = 0; i < width; i++) {
             setPixel(i, position, true);
@@ -443,5 +455,9 @@ public class Display {
     private void i2cWrite(int register, int value) {
         value &= 0xFF;
         I2C.wiringPiI2CWriteReg8(this.fd, register, value);
+    }
+
+    public Graphics2D getGraphics2D() {
+        return graphics;
     }
 }

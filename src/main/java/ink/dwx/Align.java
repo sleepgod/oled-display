@@ -6,5 +6,7 @@ package ink.dwx;
 public enum Align {
     ALIGN_LEFT,
     ALIGN_CENTER,
-    ALIGN_RIGHT
+    ALIGN_RIGHT,
+    ALIGN_TOP,
+    ALIGN_BOTTOM
 }

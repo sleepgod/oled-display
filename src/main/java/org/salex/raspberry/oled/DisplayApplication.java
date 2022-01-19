@@ -3,7 +3,6 @@ package org.salex.raspberry.oled;
 import cn.hutool.core.date.ChineseDate;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.date.format.DatePrinter;
 import cn.hutool.core.img.FontUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import com.pi4j.io.gpio.GpioController;
@@ -18,43 +17,38 @@ import org.salex.raspberry.oled.dht11.DHT11;
 import org.salex.raspberry.oled.dht11.DHT11Result;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @SpringBootApplication
 public class DisplayApplication {
 
     private static Display display;
 
-    private static void show(List<List<Content>> screen) {
+    private static void show(Map<Integer, List<Content>> screen) {
         try {
             ThreadUtil.execAsync(new Runnable() {
                 @Override
                 public void run() {
-                    int pageIndex = 1;
+                    int pageIndex = 0;
                     while (true) {
                         synchronized (screen) {
                             int pageSize = screen.size();
                             System.out.println("pageSize:" + pageSize);
                             if (pageSize > 0) {
-                                int index = pageSize % pageIndex++;
+                                int index = pageIndex % pageSize;
                                 System.out.println("index:" + index + " pageIndex:" + pageIndex);
                                 display.displayString(screen.get(index));
                             }
+                            pageIndex++;
                             if (pageIndex >= pageSize) {
-                                pageIndex = 1;
+                                pageIndex = 0;
                             }
                         }
-                        ThreadUtil.safeSleep(30 * 1000);
+                        ThreadUtil.safeSleep(15 * 1000);
                     }
                 }
             });
@@ -63,7 +57,7 @@ public class DisplayApplication {
         }
     }
 
-    private static void make(List<List<Content>> screen) {
+    private static void make(Map<Integer, List<Content>> screen) {
         try {
             ThreadUtil.execAsync(new Runnable() {
                 @Override
@@ -72,10 +66,10 @@ public class DisplayApplication {
                         List<Content> page1 = getPage1();
                         List<Content> page2 = getPage2();
                         synchronized (screen) {
-                            screen.add(page2);
-                            screen.add(page1);
+                            screen.put(0, page2);
+                            screen.put(1, page1);
                         }
-                        ThreadUtil.safeSleep(30 * 1000);
+                        ThreadUtil.safeSleep(15 * 1000);
                     }
                 }
             });
@@ -89,7 +83,7 @@ public class DisplayApplication {
             display = new Display(Constants.LCD_WIDTH_128, Constants.LCD_HEIGHT_64, GpioFactory.getInstance(), I2CFactory.getInstance(I2C.CHANNEL_1), 0x3c);
             display.begin();
 
-            List<List<Content>> screen = new ArrayList<>();
+            Map<Integer, List<Content>> screen = new HashMap<>();
             make(screen);
             show(screen);
         } catch (Exception e) {
@@ -196,7 +190,7 @@ public class DisplayApplication {
         try {
             Content time = new Content(display.getGraphics2D(),
                     DateUtil.format(DateUtil.date(), "MM-dd HH:mm"),
-                    FontUtil.createSansSerifFont(32), Align.ALIGN_CENTER, Align.ALIGN_CENTER);
+                    FontUtil.createSansSerifFont(16), Align.ALIGN_CENTER, Align.ALIGN_CENTER);
             list.add(time);
         } catch (Exception e) {
             e.printStackTrace();

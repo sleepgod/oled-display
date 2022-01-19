@@ -171,14 +171,14 @@ public class DisplayApplication {
                         "温度:" + result.getTemperature(),
                         FontUtil.createSansSerifFont(16),
                         0,
-                        (int) ip.getStrRect().getHeight());
+                        (int) (ip.getPoint().getY() + ip.getStrRect().getHeight()));
                 list.add(t);
 
                 Content h = new Content(display.getGraphics2D(),
                         "湿度:" + result.getHumidity(),
                         FontUtil.createSansSerifFont(16),
                         0,
-                        (int) t.getStrRect().getHeight());
+                        (int) (t.getPoint().getY() + t.getStrRect().getHeight()));
                 list.add(h);
             }
         } catch (UnknownHostException e) {

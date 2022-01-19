@@ -148,6 +148,8 @@ public class DisplayApplication {
         }
     }
 
+    private static double tv = 0;
+    private static double hv = 0;
     private static List<Content> getPage1() {
         List<Content> list = new ArrayList<>();
         try {
@@ -169,8 +171,6 @@ public class DisplayApplication {
 
             DHT11 dht11 = new DHT11(7);
             DHT11Result result = dht11.read();
-            double tv = 0;
-            double hv = 0;
             if (result.isValid()) {
                 tv = result.getTemperature();
                 hv = result.getHumidity();

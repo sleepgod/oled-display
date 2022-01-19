@@ -151,9 +151,10 @@ public class DisplayApplication {
     private static List<Content> getPage1() {
         List<Content> list = new ArrayList<>();
         try {
+            int fontSize = 12;
             Content ip = new Content(display.getGraphics2D(),
                     "IP:" + getLocalHostLANAddress().getHostAddress(),
-                    FontUtil.createSansSerifFont(8), 0, 0);
+                    FontUtil.createSansSerifFont(fontSize), 0, 0);
             list.add(ip);
 
             ChineseDate date = new ChineseDate(DateUtil.date());
@@ -164,21 +165,21 @@ public class DisplayApplication {
             }
             list.add(new Content(display.getGraphics2D(),
                     shu9Text,
-                    FontUtil.createSansSerifFont(8), Align.ALIGN_LEFT, Align.ALIGN_BOTTOM));
+                    FontUtil.createSansSerifFont(fontSize), Align.ALIGN_LEFT, Align.ALIGN_BOTTOM));
 
             DHT11 dht11 = new DHT11(7);
             DHT11Result result = dht11.read();
             if (result.isValid()) {
                 Content t = new Content(display.getGraphics2D(),
                         "温度:" + result.getTemperature(),
-                        FontUtil.createSansSerifFont(8),
+                        FontUtil.createSansSerifFont(fontSize),
                         0,
                         (int) (ip.getPoint().getY() + ip.getStrRect().getHeight()));
                 list.add(t);
 
                 Content h = new Content(display.getGraphics2D(),
                         "湿度:" + result.getHumidity(),
-                        FontUtil.createSansSerifFont(8),
+                        FontUtil.createSansSerifFont(fontSize),
                         0,
                         (int) (t.getPoint().getY() + t.getStrRect().getHeight()));
                 list.add(h);

@@ -19,7 +19,8 @@ public class Content {
         this.font = font;
         g2d.setFont(font);
         strRect = font.getStringBounds(str, g2d.getFontRenderContext());
-        this.point = new Point((int) (x + 0 - strRect.getY()), (int) (y + 0 - strRect.getY()));
+//        this.point = new Point((int) (x + 0 - strRect.getY()), (int) (y + 0 - strRect.getY()));
+        this.point = new Point(x, y);
         this.str = str;
     }
 

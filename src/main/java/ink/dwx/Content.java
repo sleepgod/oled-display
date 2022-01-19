@@ -22,7 +22,7 @@ public class Content {
         TextLayout t = new TextLayout(str, font, g2d.getFontRenderContext());
         strRect = t.getBounds();//font.getStringBounds(str, g2d.getFontRenderContext());
 //        this.point = new Point((int) (x + 0 - strRect.getY()), (int) (y + 0 - strRect.getY()));
-        this.point = new Point(x, y);
+        this.point = new Point(x, (int) (y + 0 - strRect.getY()));
         this.str = str;
     }
 
@@ -34,8 +34,8 @@ public class Content {
 
 //        int x = (int) (0 - strRect.getY());
         int x = 0;
-//        int y = (int) (0 - strRect.getY());
-        int y = 0;
+        int y = (int) (0 - strRect.getY());
+//        int y = 0;
         switch (xAlign) {
             case ALIGN_LEFT: {
                 x = x + 0;

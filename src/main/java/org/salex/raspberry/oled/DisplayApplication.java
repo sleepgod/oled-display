@@ -37,17 +37,18 @@ public class DisplayApplication {
 
     private static void show(List<List<Content>> screen) {
         try {
-            AtomicInteger pageIndex = new AtomicInteger();
-            pageIndex.set(0);
-
             ThreadUtil.execAsync(new Runnable() {
                 @Override
                 public void run() {
+                    int pageIndex = 1;
                     while (true) {
                         synchronized (screen) {
                             int pageSize = screen.size();
                             if (pageSize > 0) {
-                                display.displayString(screen.get(pageSize % pageIndex.getAndIncrement()));
+                                display.displayString(screen.get(pageSize % pageIndex++));
+                            }
+                            if (pageIndex >= pageSize) {
+                                pageIndex = 1;
                             }
                         }
                         ThreadUtil.safeSleep(30 * 1000);

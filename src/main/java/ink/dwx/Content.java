@@ -3,7 +3,6 @@ package ink.dwx;
 import lombok.Data;
 
 import java.awt.*;
-import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 
 /**

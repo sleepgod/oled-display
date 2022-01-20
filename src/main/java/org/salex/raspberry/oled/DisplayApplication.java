@@ -170,6 +170,7 @@ public class DisplayApplication {
             if (result.isValid()) {
                 tv = result.getTemperature();
                 hv = result.getHumidity();
+                System.out.println(tv + " " + hv);
             }
             Content t = new Content(display.getGraphics2D(),
                     "温度:" + tv,

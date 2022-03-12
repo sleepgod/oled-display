@@ -98,8 +98,12 @@ public class DisplayApplication {
     private static final String[] NUM = {"零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"};
 
     public static String shu9() {
-        Long betweenDay = DateUtil.between(DateUtil.parse("2021-12-21"), DateUtil.date(), DateUnit.DAY);
-        if (betweenDay > 81) {
+        Date dongZhi = DateUtil.parse("2022-12-22");
+        if (DateUtil.date().before(dongZhi)) {
+            return "";
+        }
+        Long betweenDay = DateUtil.between(dongZhi, DateUtil.date(), DateUnit.DAY);
+        if (betweenDay >= 81) {
             return "";
         }
         return NUM[(betweenDay.intValue() / 9 + 1)] + "九第" + NUM[(betweenDay.intValue() % 9 + 1)] + "天";

@@ -63,6 +63,7 @@ public class DisplayApplication {
                 public void run() {
                     while (true) {
                         log.info("make 1");
+                        ThreadUtil.safeSleep(1 * 1000);
                         List<Content> page1 = getPage1();
                         log.info("make 2 {}", JSONUtil.toJsonStr(page1));
                         List<Content> page2 = getPage2();

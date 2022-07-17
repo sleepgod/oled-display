@@ -180,16 +180,16 @@ public class DisplayApplication {
                     shu9Text,
                     FontUtil.createSansSerifFont(fontSize), Align.ALIGN_LEFT, Align.ALIGN_BOTTOM));
             log.info("4");
-            DHT11 dht11 = new DHT11(7);
+//            DHT11 dht11 = new DHT11(7);
             log.info("5");
-            DHT11Result result = dht11.read();
+//            DHT11Result result = dht11.read();
             log.info("6");
-            if (result.isValid()) {
-                log.info("7");
-                tv = result.getTemperature();
-                hv = result.getHumidity();
-//                System.out.println(tv + " " + hv);
-            }
+//            if (result.isValid()) {
+//                log.info("7");
+//                tv = result.getTemperature();
+//                hv = result.getHumidity();
+////                System.out.println(tv + " " + hv);
+//            }
             log.info("8");
             Content t = new Content(display.getGraphics2D(),
                     "温度:" + tv,

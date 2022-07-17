@@ -161,41 +161,52 @@ public class DisplayApplication {
         List<Content> list = new ArrayList<>();
         try {
             int fontSize = 14;
+            log.info("0");
             Content ip = new Content(display.getGraphics2D(),
                     "IP:" + getLocalHostLANAddress().getHostAddress(),
                     FontUtil.createSansSerifFont(fontSize), 0, 0);
+            log.info("1");
             list.add(ip);
 
             ChineseDate date = new ChineseDate(DateUtil.date());
             String shu9Text = date.getChineseMonthName() + date.getChineseDay();
             String shu9 = shu9();
+            log.info("2");
             if (StringUtils.isNotBlank(shu9)) {
                 shu9Text += " " + shu9;
             }
+            log.info("3");
             list.add(new Content(display.getGraphics2D(),
                     shu9Text,
                     FontUtil.createSansSerifFont(fontSize), Align.ALIGN_LEFT, Align.ALIGN_BOTTOM));
-
+            log.info("4");
             DHT11 dht11 = new DHT11(7);
+            log.info("5");
             DHT11Result result = dht11.read();
+            log.info("6");
             if (result.isValid()) {
+                log.info("7");
                 tv = result.getTemperature();
                 hv = result.getHumidity();
 //                System.out.println(tv + " " + hv);
             }
+            log.info("8");
             Content t = new Content(display.getGraphics2D(),
                     "温度:" + tv,
                     FontUtil.createSansSerifFont(fontSize),
                     0,
                     (int) (ip.getStrRect().getHeight()));
+            log.info("9");
             list.add(t);
-
+            log.info("10");
             Content h = new Content(display.getGraphics2D(),
                     "湿度:" + hv,
                     FontUtil.createSansSerifFont(fontSize),
                     0,
                     (int) (ip.getStrRect().getHeight() + t.getStrRect().getHeight()));
+            log.info("11");
             list.add(h);
+            log.info("12");
             log.info(JSONUtil.toJsonStr(list));
         } catch (UnknownHostException e) {
             e.printStackTrace();

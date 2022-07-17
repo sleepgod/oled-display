@@ -193,6 +193,7 @@ public class DisplayApplication {
                     0,
                     (int) (ip.getStrRect().getHeight() + t.getStrRect().getHeight()));
             list.add(h);
+            log.info(JSONUtil.toJsonStr(list));
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -206,6 +207,7 @@ public class DisplayApplication {
                     DateUtil.format(DateUtil.date(), "MM-dd HH:mm"),
                     FontUtil.createSansSerifFont(20), Align.ALIGN_CENTER, Align.ALIGN_CENTER);
             list.add(time);
+            log.info(JSONUtil.toJsonStr(list));
         } catch (Exception e) {
             e.printStackTrace();
         }

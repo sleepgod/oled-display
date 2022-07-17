@@ -191,7 +191,7 @@ public class DisplayApplication {
 //                hv = result.getHumidity();
 ////                System.out.println(tv + " " + hv);
 //            }
-            Data dht11 = Dht11.getData(RaspiPin.GPIO_11);
+            Data dht11 = Dht11.getData(RaspiPin.GPIO_17);
             log.info("8");
             Content t = new Content(display.getGraphics2D(),
                     "温度:" + dht11.getCelsius(),

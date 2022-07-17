@@ -81,6 +81,7 @@ public class DisplayApplication {
             Map<Integer, List<Content>> screen = new HashMap<>();
             make(screen);
             show(screen);
+            System.out.println(1);
         } catch (Exception e) {
             e.printStackTrace();
         }

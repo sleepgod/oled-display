@@ -62,8 +62,11 @@ public class DisplayApplication {
                 @Override
                 public void run() {
                     while (true) {
+                        log.info("make 1");
                         List<Content> page1 = getPage1();
+                        log.info("make 2 {}", JSONUtil.toJsonStr(page1));
                         List<Content> page2 = getPage2();
+                        log.info("make 3 {}", JSONUtil.toJsonStr(page2));
                         synchronized (screen) {
                             screen.put(0, page2);
                             screen.put(1, page1);

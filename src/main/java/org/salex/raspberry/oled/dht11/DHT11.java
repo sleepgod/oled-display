@@ -26,6 +26,7 @@ public class DHT11 {
         this.pin = pin;
         log.info("3");
         GpioUtil.export(pin, GpioUtil.DIRECTION_OUT);
+        log.info("4");
     }
 
     public DHT11Result read() {

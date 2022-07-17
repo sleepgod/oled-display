@@ -180,7 +180,7 @@ public class DisplayApplication {
                     shu9Text,
                     FontUtil.createSansSerifFont(fontSize), Align.ALIGN_LEFT, Align.ALIGN_BOTTOM));
             log.info("4");
-            DHT11 dht11 = new DHT11(7);
+            DHT11 dht11 = new DHT11(11);
             log.info("5");
             DHT11Result result = dht11.read();
             log.info("6");

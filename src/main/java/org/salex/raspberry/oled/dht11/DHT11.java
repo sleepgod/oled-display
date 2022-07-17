@@ -2,10 +2,12 @@ package org.salex.raspberry.oled.dht11;
 
 import com.pi4j.wiringpi.Gpio;
 import com.pi4j.wiringpi.GpioUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class DHT11 {
     // DHT11 sensor reader class for Raspberry Pi
 
@@ -15,10 +17,14 @@ public class DHT11 {
 
     public DHT11(int pin) {
         // setup wiringPi
+        log.info("0");
         if (Gpio.wiringPiSetup() != 0) {
+            log.info("1");
             throw new RuntimeException("Initialization of the GPIO has failed.");
         }
+        log.info("2");
         this.pin = pin;
+        log.info("3");
         GpioUtil.export(pin, GpioUtil.DIRECTION_OUT);
     }
 

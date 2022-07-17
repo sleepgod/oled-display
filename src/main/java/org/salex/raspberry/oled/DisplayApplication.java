@@ -5,11 +5,13 @@ import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.img.FontUtil;
 import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.json.JSONUtil;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.i2c.I2CFactory;
 import com.pi4j.wiringpi.I2C;
 import ink.dwx.Align;
 import ink.dwx.Content;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.salex.raspberry.oled.dht11.DHT11;
 import org.salex.raspberry.oled.dht11.DHT11Result;
@@ -20,6 +22,7 @@ import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.*;
 
+@Slf4j
 @SpringBootApplication
 public class DisplayApplication {
 
@@ -81,7 +84,7 @@ public class DisplayApplication {
             Map<Integer, List<Content>> screen = new HashMap<>();
             make(screen);
             show(screen);
-            System.out.println(1);
+            log.info(JSONUtil.toJsonStr(screen));
         } catch (Exception e) {
             e.printStackTrace();
         }

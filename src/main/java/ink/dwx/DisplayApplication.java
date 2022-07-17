@@ -1,4 +1,4 @@
-package org.salex.raspberry.oled;
+package ink.dwx;
 
 import cn.hutool.core.date.ChineseDate;
 import cn.hutool.core.date.DateUnit;
@@ -9,13 +9,13 @@ import cn.hutool.json.JSONUtil;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.i2c.I2CFactory;
 import com.pi4j.wiringpi.I2C;
-import ink.dwx.Align;
-import ink.dwx.Content;
+import ink.dwx.dht11.Data;
+import ink.dwx.dht11.Dht11;
+import ink.dwx.dht11.Dht11Exception;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.salex.raspberry.oled.dht11.DHT11;
-import org.salex.raspberry.oled.dht11.DHT11Result;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.pi4j.io.gpio.RaspiPin;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -181,19 +181,20 @@ public class DisplayApplication {
                     shu9Text,
                     FontUtil.createSansSerifFont(fontSize), Align.ALIGN_LEFT, Align.ALIGN_BOTTOM));
             log.info("4");
-            DHT11 dht11 = new DHT11(11);
+//            DHT11 dht11 = new DHT11(RaspiPin.GPIO_11.get);
             log.info("5");
-            DHT11Result result = dht11.read();
+//            DHT11Result result = dht11.read();
             log.info("6");
-            if (result.isValid()) {
-                log.info("7");
-                tv = result.getTemperature();
-                hv = result.getHumidity();
-//                System.out.println(tv + " " + hv);
-            }
+//            if (result.isValid()) {
+//                log.info("7");
+//                tv = result.getTemperature();
+//                hv = result.getHumidity();
+////                System.out.println(tv + " " + hv);
+//            }
+            Data dht11 = Dht11.getData(RaspiPin.GPIO_11);
             log.info("8");
             Content t = new Content(display.getGraphics2D(),
-                    "温度:" + tv,
+                    "温度:" + dht11.getCelsius(),
                     FontUtil.createSansSerifFont(fontSize),
                     0,
                     (int) (ip.getStrRect().getHeight()));
@@ -201,7 +202,7 @@ public class DisplayApplication {
             list.add(t);
             log.info("10");
             Content h = new Content(display.getGraphics2D(),
-                    "湿度:" + hv,
+                    "湿度:" + dht11.getHumidity(),
                     FontUtil.createSansSerifFont(fontSize),
                     0,
                     (int) (ip.getStrRect().getHeight() + t.getStrRect().getHeight()));
@@ -211,6 +212,8 @@ public class DisplayApplication {
             log.info(JSONUtil.toJsonStr(list));
         } catch (UnknownHostException e) {
             e.printStackTrace();
+        } catch (Dht11Exception e) {
+            throw new RuntimeException(e);
         }
         return list;
     }

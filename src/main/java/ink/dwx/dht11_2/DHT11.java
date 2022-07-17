@@ -1,4 +1,4 @@
-package org.salex.raspberry.oled.dht11;
+package ink.dwx.dht11_2;
 
 import com.pi4j.wiringpi.Gpio;
 import com.pi4j.wiringpi.GpioUtil;

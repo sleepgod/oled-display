@@ -1,4 +1,4 @@
-package org.salex.raspberry.oled.dht11;
+package ink.dwx.dht11_2;
 
 public class DHT11Result {
     // DHT11 sensor result returned by DHT11.read() method

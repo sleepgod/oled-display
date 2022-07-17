@@ -1,4 +1,4 @@
-package org.salex.raspberry.oled;
+package ink.dwx;
 
 public class Constants {
     public static final short SSD1306_I2C_ADDRESS = 0x3C;

@@ -1,4 +1,4 @@
-package org.salex.raspberry.oled;
+package ink.dwx;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
@@ -6,7 +6,6 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.wiringpi.I2C;
-import ink.dwx.Content;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
